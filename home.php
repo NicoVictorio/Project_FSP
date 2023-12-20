@@ -7,6 +7,7 @@ if(isset($_SESSION['userid'])){
 
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="1.css" />
 
 <head>
     <meta charset="UTF-8">
@@ -31,7 +32,7 @@ if(isset($_SESSION['userid'])){
 </head>
 
 <body>
-    <section>
+    <!-- <section>
         <div class="container">
             <form method="get">
                 <div class="cari">
@@ -84,7 +85,79 @@ if(isset($_SESSION['userid'])){
             </div>
             </form>
         </div>
-    </section>
+    </section> -->
+    <header>
+        <div class="header-atas">
+            <p class='header-satu'>
+                CERBUNG
+            </p>
+            <p class='header-empat'>
+                Cerita Bersambung
+            </p>
+        </div>
+    </header>
+    <main>
+        <div class="cmb">
+            <label class="label-pilihan" for="cmb-pilihan">Kategori</label><br>
+            <div class="cmb-1">
+            <select style="width: 200px" name="cerita" class="pilihan">
+                <option value="Ceritaku">Ceritaku</option>
+                <option value="Kumpulan Cerita">Kumpulan Cerita</option>
+            </select>
+        </div>
+        </div>
+        <div class='container'></div>
+        <div class="container-kiri">
+            <div class="sub-judul">Ceritaku</div>
+            <div class="container-class-kiri">
+                <div class="class-kiri">
+                    <h3 class="judul-Cerita"> Judul Cerita</h3>
+                    <div class="container-card-text">
+                        <p class="paragraf">Jumlah Paragraf : 2</p>
+                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
+                    </div>
+                </div>
+                <div class="class-kiri">
+                    <h3 class="judul-Cerita"> Judul Cerita</h3>
+                    <div class="container-card-text">
+                        <p class="paragraf">Jumlah Paragraf : 2</p>
+                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
+                    </div>
+                </div>
+            </div>
+            <button id="load-more-btn">Tampilkan Cerita Selanjutnya</button>
+
+        </div>
+        <div class="container-kanan">
+            <div class="sub-judul">Kumpulan Cerita</div>
+            <div class="container-card-kiri">
+                <div class="card-kanan-satu">
+                    <h3 class="judul-cerita"> Judul Cerita</h3>
+                    <div class="container-class-kanan">
+                        <p class="paragraf">Jumlah Paragraf : 2</p>
+                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
+                    </div>
+                </div>
+                <div class="card-kanan-satu">
+                    <h3 class="judul-cerita"> Judul Cerita</h3>
+                    <div class="container-class-kanan">
+                        <p class="paragraf">Jumlah Paragraf : 2</p>
+                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
+                    </div>
+                </div>
+                <div class="card-kanan-satu">
+                    <h3 class="judul-cerita"> Judul Cerita</h3>
+                    <div class="container-class-kanan">
+                        <p class="paragraf">Jumlah Paragraf : 2</p>
+                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+    </main>
 </body>
 
 </html>

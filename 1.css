@@ -1,0 +1,250 @@
+@media (min-width:1024px) {
+    /* .container {
+        display: grid;
+        grid-template-columns: 60px 60px;
+        grid-template-rows: 50px 50px 50px 50px;
+    } */
+
+    .class-kiri {
+        border-style: solid;
+        border-width: 1px;
+        width: 75%;
+        height: 50%;
+        margin-left: 20px;
+    }
+
+    .header-atas {
+        line-height: 0;
+    }
+
+    .header-satu {
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .header-empat {
+        padding-left: 4px;
+    }
+
+    .container-card-kiri {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        /* Two equal-width columns */
+        grid-gap: 10px;
+    }
+
+
+    .card-kanan-satu {
+        border: 1px solid black;
+        padding: 5px;
+        width: 50%;
+        margin-left: 20px;
+        margin: 5px;
+        padding: 5px;
+
+    }
+
+    .container-kiri {
+        width: 25%;
+        height: 100%;
+
+        float: right;
+    }
+
+    .container-kanan {
+        width: 74%;
+        height: 100%;
+        border-right: 5px solid gray;
+        float: left;
+    }
+
+    .sub-judul {
+        font-size: 30px;
+        margin-left: 20px;
+        width: 75%;
+    }
+
+    .judul-Cerita {
+        text-align: center;
+    }
+
+    .paragraf {
+        font-size: 15px;
+        font-weight: 50;
+        line-height: 0;
+    }
+
+    .container-class-kiri {
+        padding-top: 20px;
+        line-height: 0.5;
+        padding-bottom: 10px;
+        padding-left: 5px;
+    }
+
+    .container-class-kanan {
+        padding-top: 20px;
+        line-height: 0.5;
+        padding-bottom: 10px;
+        padding-left: 5px;
+    }
+
+    #load-more-btn {
+        display: block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        margin: 18px;
+        background-color: #f1f1f1;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #load-more-btn:hover {
+        background-color: #ddd;
+    }
+
+    .cmb{
+        display: none;
+    }
+}
+
+#load-more-btn {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    margin: 18px;
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#load-more-btn:hover {
+    background-color: #ddd;
+}
+
+@media (min-width:576px) and (max-width:1023px) {
+    .header-atas {
+        text-align: center;
+        line-height: 0;
+    }
+
+    .header-satu {
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .header-empat {
+        padding-left: 4px;
+    }
+
+    .container-card-kiri {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 0px;
+    }
+
+    .card-kanan-satu {
+        border: 1px solid black;
+        padding: 5px;
+        width: 50%;
+        margin-left: 20px;
+        margin: 5px;
+        padding: 5px;
+
+    }
+
+    .judul-Cerita {
+        text-align: center;
+    }
+
+    .sub-judul {
+        font-size: 30px;
+        margin-left: 20px;
+        width: 75%;
+    }
+
+    .class-kiri {
+        border: 1px solid black;
+        padding: 5px;
+        width: 50%;
+        margin-left: 20px;
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .container-class-kiri {
+        background-color: pink;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 0px;
+    }
+
+    .cmb{
+        display: none;
+    }
+
+
+}
+
+@media (max-width:576px) {
+    .header-atas {
+        text-align: center;
+        line-height: 0;
+    }
+
+    .header-satu {
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .header-empat {
+        padding-left: 4px;
+    }
+
+    .judul-Cerita {
+        text-align: center;
+    }
+
+    .sub-judul {
+        font-size: 30px;
+        margin-left: 20px;
+        width: 75%;
+    }
+    .cmb{
+        text-align: center;
+    }
+    .label-pilihan{
+        padding-right: 130px;
+
+    }
+    .card-kanan-satu {
+        border: 1px solid black;
+        padding: 5px;
+        width: 50%;
+        margin-left: 20px;
+        margin: 5px;
+        padding: 5px;
+
+    }
+    .class-kiri {
+        border: 1px solid black;
+        padding: 5px;
+        width: 50%;
+        margin-left: 20px;
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .container-class-kiri {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+    .container-card-text{
+        line-height: 0.2;
+    }
+    
+
+}
