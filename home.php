@@ -144,21 +144,6 @@ if (isset($_SESSION['userid'])) {
             <div class="sub-judul">Kumpulan Cerita</div>
             <div class="container-card-kiri" id="data_cerita">
 
-                <?php
-                $res = $cerita->loadCerita($userid, 0, 8);
-
-                while ($row = $res->fetch_assoc()) {
-                    echo "<div class='card-kanan-satu'>
-                        <h3 class='judul-cerita'>$row[judul]</h3>
-                        <div class='container-class-kanan'>
-                            <p class='pemilik'>Pemilik Cerita: $row[nama]</p>
-                            <p class='paragraf'>Jumlah Paragraf : $row[jumlah_paragraf]</p>
-                            <a class='link' href='read.php?id=$row[idcerita]'> Baca Lebih Lanjut</a>
-                        </div>
-                    </div>
-                    ";
-                }
-                ?>
             </div>
             <button class="pagination" id='load-more-btn' data-context='cerita'>Tampilkan Cerita Selanjutnya</button>
 
@@ -166,14 +151,36 @@ if (isset($_SESSION['userid'])) {
         </div>
 
         <script>
-            $(document).ready(function () {
+            $(document).ready(async function () {
+                const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
                 let pagination_ceritaku = 1;
                 let pagination_cerita = 2;
+                let start_pagination_cerita = 1;
+
+                if (screenWidth <= 575) {
+                    start_pagination_cerita = 0
+                    pagination_cerita = 1;
+                }
+                for (let i = 0; i <= start_pagination_cerita; i++) {
+                    const ceritaResponse = await $.get(`cerita_pagination.php?pagination=${i}&limit=4`)
+
+                    for (const data_cerita of ceritaResponse) {
+                        $('#data_cerita').append(`<div class='card-kanan-satu'>
+                        <h3 class='judul-cerita'>${data_cerita.judul}</h3>
+                        <div class='container-class-kanan'>
+                            <p class='pemilik'>Pemilik Cerita: ${data_cerita.nama}</p>
+                            <p class='paragraf'>Jumlah Paragraf : ${data_cerita.jumlah_paragraf}</p>
+                            <a class='link' href='read.php?id=${data_cerita.idcerita}'> Baca Lebih Lanjut</a>
+                        </div>
+                    </div>`)
+                    }
+                }
+
                 $('.pagination').on('click', async function () {
                     switch ($(this).data('context')) {
                         case 'cerita':
-                            
-                            const ceritaResponse = await $.get(`cerita_pagination.php?pagination=${pagination_cerita}`)
+                            const ceritaResponse = await $.get(`cerita_pagination.php?pagination=${pagination_cerita}&limit=4`)
                             if (ceritaResponse.length == 0) {
                                 $(this).hide()
                                 alert('tidak ada data yang tersedia')
@@ -198,7 +205,7 @@ if (isset($_SESSION['userid'])) {
                                 alert('tidak ada data yang tersedia')
                                 return
                             }
-                            for (const data_ceritaku of ceritakuResponse) {
+                            for (const data_ceritaku of ceritakuResponse) { //untuk looping array
                                 $('#data_ceritaku').append(`<div class='class-kiri'>
                     <h3 class='judul-Cerita'>${data_ceritaku.judul}</h3>
                     <div class='container-card-text'>
