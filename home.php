@@ -1,7 +1,8 @@
 <?php
 require_once('class/cerita.php');
-if(isset($_SESSION['userid'])){
+if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid'];
+
 }
 ?>
 
@@ -12,6 +13,7 @@ if(isset($_SESSION['userid'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery-3.6.1.min.js"></script>
     <title>Home</title>
     <style>
         table {
@@ -54,10 +56,13 @@ if(isset($_SESSION['userid'])){
                         <th colspan='1'>Aksi</th>
                     </tr>
                     <?php
+
+                    // search
                     $cerita = new Cerita();
 
                     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
-                    if (!is_numeric($offset)) $offset = 0;
+                    if (!is_numeric($offset))
+                        $offset = 0;
 
                     $cari = isset($_GET['cari']) ? $_GET['cari'] : "";
                     $cari_persen = "%" . $cari . "%";
@@ -69,23 +74,30 @@ if(isset($_SESSION['userid'])){
 
                     $res = $cerita->lihatCerita($cari_persen, $offset, $PER_PAGE);
                     while ($row = $res->fetch_assoc()) {
-                        echo   "<tr class='rata-tengah'>  
+                        echo "<tr class='rata-tengah'>  
                                     <td colspan='1'>" . $row['judul'] . "</td>
                                     <td colspan='1'>" . $row['idusers_pembuat_awal'] . "</td>
-                                    <td colspan='1'><a href='viewStory.php?idCerita=" . $row["idcerita"] . "&judul= " . $row["judul"] . "'>Lihat Cerita</a></td>
+                                    <td colspan='1'><a href='read.php?idCerita=" . $row["idcerita"] . "&judul= " . $row["judul"] . "'>Lihat Cerita</a></td>
                                 </tr>";
                     }
+
                     ?>
-                </table>
+                </table>    
+                
                 <?php
+
                 for ($i = 1; $i <= $max_halaman; $i++) {
                     echo "<a href='?idusers=$userid&offset=" . (($i - 1) * $PER_PAGE) . "&cari=$cari'>$i</a>&nbsp&nbsp";
                 }
+
+
                 ?>
             </div>
             </form>
         </div>
     </section> -->
+
+    <!-- //untuk kumpulan cerita -->
     <header>
         <div class="header-atas">
             <p class='header-satu'>
@@ -100,63 +112,109 @@ if(isset($_SESSION['userid'])){
         <div class="cmb">
             <label class="label-pilihan" for="cmb-pilihan">Kategori</label><br>
             <div class="cmb-1">
-            <select style="width: 200px" name="cerita" class="pilihan">
-                <option value="Ceritaku">Ceritaku</option>
-                <option value="Kumpulan Cerita">Kumpulan Cerita</option>
-            </select>
-        </div>
+                <select style="width: 200px" name="cerita" class="pilihan">
+                    <option value="Ceritaku">Ceritaku</option>
+                    <option value="Kumpulan Cerita">Kumpulan Cerita</option>
+                </select>
+            </div>
         </div>
         <div class='container'></div>
         <div class="container-kiri">
             <div class="sub-judul">Ceritaku</div>
-            <div class="container-class-kiri">
-                <div class="class-kiri">
-                    <h3 class="judul-Cerita"> Judul Cerita</h3>
-                    <div class="container-card-text">
-                        <p class="paragraf">Jumlah Paragraf : 2</p>
-                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
+            <div id="data_ceritaku">
+                <?php
+                $res = $cerita->loadCeritaKu($userid, 0, 2);
+
+                while ($row = $res->fetch_assoc()) {
+                    echo "<div class='class-kiri'>
+                    <h3 class='judul-Cerita'>$row[judul]</h3>
+                    <div class='container-card-text'>
+                        <p class='paragraf'>Jumlah Paragraf : $row[jumlah_paragraf]</p>
+                        <a class='link' href='read.php?id=$row[idcerita]'> Baca Lebih Lanjut</a>
                     </div>
                 </div>
-                <div class="class-kiri">
-                    <h3 class="judul-Cerita"> Judul Cerita</h3>
-                    <div class="container-card-text">
-                        <p class="paragraf">Jumlah Paragraf : 2</p>
-                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
-                    </div>
-                </div>
+                ";
+                }
+                ?>
             </div>
-            <button id="load-more-btn">Tampilkan Cerita Selanjutnya</button>
+            <button class="pagination" id='load-more-btn' data-context='ceritaku'>Tampilkan Cerita Selanjutnya</button>
 
         </div>
         <div class="container-kanan">
             <div class="sub-judul">Kumpulan Cerita</div>
-            <div class="container-card-kiri">
-                <div class="card-kanan-satu">
-                    <h3 class="judul-cerita"> Judul Cerita</h3>
-                    <div class="container-class-kanan">
-                        <p class="paragraf">Jumlah Paragraf : 2</p>
-                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
+            <div class="container-card-kiri" id="data_cerita">
+
+                <?php
+                $res = $cerita->loadCerita($userid, 0, 8);
+
+                while ($row = $res->fetch_assoc()) {
+                    echo "<div class='card-kanan-satu'>
+                        <h3 class='judul-cerita'>$row[judul]</h3>
+                        <div class='container-class-kanan'>
+                            <p class='pemilik'>Pemilik Cerita: $row[nama]</p>
+                            <p class='paragraf'>Jumlah Paragraf : $row[jumlah_paragraf]</p>
+                            <a class='link' href='read.php?id=$row[idcerita]'> Baca Lebih Lanjut</a>
+                        </div>
                     </div>
-                </div>
-                <div class="card-kanan-satu">
-                    <h3 class="judul-cerita"> Judul Cerita</h3>
-                    <div class="container-class-kanan">
-                        <p class="paragraf">Jumlah Paragraf : 2</p>
-                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
-                    </div>
-                </div>
-                <div class="card-kanan-satu">
-                    <h3 class="judul-cerita"> Judul Cerita</h3>
-                    <div class="container-class-kanan">
-                        <p class="paragraf">Jumlah Paragraf : 2</p>
-                        <a class="link" href="google.com"> Baca Lebih Lanjut</a>
-                    </div>
-                </div>
+                    ";
+                }
+                ?>
             </div>
+            <button class="pagination" id='load-more-btn' data-context='cerita'>Tampilkan Cerita Selanjutnya</button>
 
         </div>
         </div>
 
+        <script>
+            $(document).ready(function () {
+                let pagination_ceritaku = 1;
+                let pagination_cerita = 2;
+                $('.pagination').on('click', async function () {
+                    switch ($(this).data('context')) {
+                        case 'cerita':
+                            
+                            const ceritaResponse = await $.get(`cerita_pagination.php?pagination=${pagination_cerita}`)
+                            if (ceritaResponse.length == 0) {
+                                $(this).hide()
+                                alert('tidak ada data yang tersedia')
+                                return
+                            }
+                            for (const data_cerita of ceritaResponse) {
+                                $('#data_cerita').append(`<div class='card-kanan-satu'>
+                        <h3 class='judul-cerita'>${data_cerita.judul}</h3>
+                        <div class='container-class-kanan'>
+                            <p class='pemilik'>Pemilik Cerita: ${data_cerita.nama}</p>
+                            <p class='paragraf'>Jumlah Paragraf : ${data_cerita.jumlah_paragraf}</p>
+                            <a class='link' href='read.php?id=${data_cerita.idcerita}'> Baca Lebih Lanjut</a>
+                        </div>
+                    </div>
+                    `)
+                            }
+                            break;
+                        case 'ceritaku':
+                            const ceritakuResponse = await $.get(`ceritaku_pagination.php?pagination=${pagination_ceritaku}`)
+                            if (ceritakuResponse.length == 0) {
+                                $(this).hide()
+                                alert('tidak ada data yang tersedia')
+                                return
+                            }
+                            for (const data_ceritaku of ceritakuResponse) {
+                                $('#data_ceritaku').append(`<div class='class-kiri'>
+                    <h3 class='judul-Cerita'>${data_ceritaku.judul}</h3>
+                    <div class='container-card-text'>
+                        <p class='paragraf'>Jumlah Paragraf :${data_ceritaku.jumlah_paragraf}</p>
+                        <a class='link' href='read.php?id=${data_ceritaku.idcerita}'> Baca Lebih Lanjut</a>
+                    </div>
+                </div>
+                `)
+                            }
+                            break;
+                    }
+                    pagination_cerita++;
+                    pagination_ceritaku++;
+                })
+            });
+        </script>
     </main>
 </body>
 

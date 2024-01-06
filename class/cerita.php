@@ -18,6 +18,44 @@ class Cerita extends ParentClass
         $stmt->close();
     }
 
+    public function loadCerita($userid, $offset = 0, $limit = null)
+    {
+        $sql = "SELECT c.idcerita, c.judul, u.nama, (select count(idparagraf) from paragraf p where p.idcerita = c.idcerita ) AS jumlah_paragraf
+             FROM cerita c inner join users u on u.idusers = c.idusers
+                where c.idusers != ?";
+        $stmt = $this->mysqli->prepare($sql);
+        if (is_null($limit)) {
+            $stmt = $this->mysqli->prepare($sql);
+        } else {
+            $offset = $offset * $limit;
+            $sql .= " LIMIT $offset,$limit";
+            $stmt = $this->mysqli->prepare($sql);
+        }
+        $stmt->bind_param("i", $userid);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        return $res;
+    }
+
+    public function loadCeritaKu($userid, $offset = 0, $limit = null)
+    {
+        $sql = "SELECT c.idcerita, c.judul, u.nama, (select count(idparagraf) from paragraf p where p.idcerita = c.idcerita ) AS jumlah_paragraf
+             FROM cerita c inner join users u on u.idusers = c.idusers
+                where c.idusers = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        if (is_null($limit)) {
+            $stmt = $this->mysqli->prepare($sql);
+        } else {
+            $offset = $offset * $limit;
+            $sql .= " LIMIT $offset,$limit";
+            $stmt = $this->mysqli->prepare($sql);
+        }
+        $stmt->bind_param("i", $userid);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        return $res;
+    }
+
     public function lihatCerita($cariJudul = "", $offset = 0, $limit = null)
     {
         $sql = "SELECT * from cerita WHERE judul like ?";
@@ -33,6 +71,18 @@ class Cerita extends ParentClass
         $stmt->execute();
         $res = $stmt->get_result();
         return $res;
+    }
+
+    public function lihatCeritaById($idCerita)
+    {
+        $sql = "SELECT * FROM cerita where idcerita=? limit 1";
+        $stmt = $this->mysqli->prepare($sql);
+
+        $stmt->bind_param("s", $idCerita);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $row = $res->fetch_assoc();
+        return $row;
     }
 
     public function tambahParagrafPertama($userid, $judul, $paragraf)
@@ -68,4 +118,6 @@ class Cerita extends ParentClass
         $res = $stmt->get_result();
         return $res;
     }
+
+
 }
