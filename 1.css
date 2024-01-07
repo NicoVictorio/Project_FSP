@@ -183,8 +183,6 @@
     .cmb{
         display: none;
     }
-
-
 }
 
 @media (max-width:576px) {
@@ -245,6 +243,4 @@
     .container-card-text{
         line-height: 0.2;
     }
-    
-
 }

@@ -2,7 +2,6 @@
 require_once('class/cerita.php');
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid'];
-
 }
 ?>
 
@@ -29,6 +28,51 @@ if (isset($_SESSION['userid'])) {
 
         .rata-tengah {
             text-align: center;
+        }
+
+        @media (min-width:576px) and (max-width:1023px) {
+            #data_ceritaku {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 0px;
+            }
+
+            .paragraf,
+            .link,
+            .pemilik,
+            .judul-cerita {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        @media (max-width:576px) {
+            .container-kanan {
+                display: none;
+            }
+
+            .sub-judul,
+            .paragraf,
+            .link {
+                display: flex;
+                justify-content: center;
+            }
+
+            #data_ceritaku, .container-card-kiri {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 0 100px 0 100px;
+            }
+
+            .class-kiri, .card-kanan-satu {
+                width: 100%;
+            }
+
+            #load-more-btn{
+                margin-left: 100px;
+            }
         }
     </style>
 </head>
@@ -151,7 +195,7 @@ if (isset($_SESSION['userid'])) {
         </div>
 
         <script>
-            $(document).ready(async function () {
+            $(document).ready(async function() {
                 const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
                 let pagination_ceritaku = 1;
@@ -177,7 +221,7 @@ if (isset($_SESSION['userid'])) {
                     }
                 }
 
-                $('.pagination').on('click', async function () {
+                $('.pagination').on('click', async function() {
                     switch ($(this).data('context')) {
                         case 'cerita':
                             const ceritaResponse = await $.get(`cerita_pagination.php?pagination=${pagination_cerita}&limit=4`)
@@ -188,14 +232,14 @@ if (isset($_SESSION['userid'])) {
                             }
                             for (const data_cerita of ceritaResponse) {
                                 $('#data_cerita').append(`<div class='card-kanan-satu'>
-                        <h3 class='judul-cerita'>${data_cerita.judul}</h3>
-                        <div class='container-class-kanan'>
-                            <p class='pemilik'>Pemilik Cerita: ${data_cerita.nama}</p>
-                            <p class='paragraf'>Jumlah Paragraf : ${data_cerita.jumlah_paragraf}</p>
-                            <a class='link' href='read.php?id=${data_cerita.idcerita}'> Baca Lebih Lanjut</a>
-                        </div>
-                    </div>
-                    `)
+                                                            <h3 class='judul-cerita'>${data_cerita.judul}</h3>
+                                                            <div class='container-class-kanan'>
+                                                                <p class='pemilik'>Pemilik Cerita: ${data_cerita.nama}</p>
+                                                                <p class='paragraf'>Jumlah Paragraf : ${data_cerita.jumlah_paragraf}</p>
+                                                                <a class='link' href='read.php?id=${data_cerita.idcerita}'> Baca Lebih Lanjut</a>
+                                                            </div>
+                                                        </div>
+                                                        `)
                             }
                             break;
                         case 'ceritaku':
@@ -207,18 +251,30 @@ if (isset($_SESSION['userid'])) {
                             }
                             for (const data_ceritaku of ceritakuResponse) { //untuk looping array
                                 $('#data_ceritaku').append(`<div class='class-kiri'>
-                    <h3 class='judul-Cerita'>${data_ceritaku.judul}</h3>
-                    <div class='container-card-text'>
-                        <p class='paragraf'>Jumlah Paragraf :${data_ceritaku.jumlah_paragraf}</p>
-                        <a class='link' href='read.php?id=${data_ceritaku.idcerita}'> Baca Lebih Lanjut</a>
-                    </div>
-                </div>
-                `)
+                                                                <h3 class='judul-Cerita'>${data_ceritaku.judul}</h3>
+                                                                <div class='container-card-text'>
+                                                                    <p class='paragraf'>Jumlah Paragraf :${data_ceritaku.jumlah_paragraf}</p>
+                                                                    <a class='link' href='read.php?id=${data_ceritaku.idcerita}'> Baca Lebih Lanjut</a>
+                                                                </div>
+                                                            </div>
+                                                            `)
                             }
                             break;
                     }
                     pagination_cerita++;
                     pagination_ceritaku++;
+                })
+                $('.pilihan').on('change', function() {
+                    var pilih = $('.pilihan').val();
+                    var element1 = document.getElementsByClassName('container-kanan');
+                    var element2 = document.getElementsByClassName('container-kiri');
+                    if (pilih == "Ceritaku") {
+                        $('.container-kanan').hide();
+                        $('.container-kiri').show();
+                    } else {
+                        $('.container-kanan').show();
+                        $('.container-kiri').hide();
+                    }
                 })
             });
         </script>

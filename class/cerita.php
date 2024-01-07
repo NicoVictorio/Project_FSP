@@ -21,8 +21,8 @@ class Cerita extends ParentClass
     public function loadCerita($userid, $offset = 0, $limit = null)
     {
         $sql = "SELECT c.idcerita, c.judul, u.nama, (select count(idparagraf) from paragraf p where p.idcerita = c.idcerita ) AS jumlah_paragraf
-             FROM cerita c inner join users u on u.idusers = c.idusers
-                where c.idusers != ?";
+             FROM cerita c inner join users u on u.idusers = c.idusers_pembuat_awal
+                where c.idusers_pembuat_awal != ?";
         $stmt = $this->mysqli->prepare($sql);
         if (is_null($limit)) {
             $stmt = $this->mysqli->prepare($sql);
@@ -40,8 +40,8 @@ class Cerita extends ParentClass
     public function loadCeritaKu($userid, $offset = 0, $limit = null)
     {
         $sql = "SELECT c.idcerita, c.judul, u.nama, (select count(idparagraf) from paragraf p where p.idcerita = c.idcerita ) AS jumlah_paragraf
-             FROM cerita c inner join users u on u.idusers = c.idusers
-                where c.idusers = ?";
+             FROM cerita c inner join users u on u.idusers = c.idusers_pembuat_awal
+                where c.idusers_pembuat_awal = ?";
         $stmt = $this->mysqli->prepare($sql);
         if (is_null($limit)) {
             $stmt = $this->mysqli->prepare($sql);
