@@ -263,7 +263,8 @@ if (isset($_SESSION['userid'])) {
                     }
                     pagination_cerita++;
                     pagination_ceritaku++;
-                })
+                });
+                
                 $('.pilihan').on('change', function() {
                     var pilih = $('.pilihan').val();
                     var element1 = document.getElementsByClassName('container-kanan');
